@@ -1,3 +1,5 @@
+README.md
+setup.cfg
 setup.py
 iptoolsjj/__init__.py
 iptoolsjj.egg-info/PKG-INFO
