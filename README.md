@@ -2,29 +2,28 @@ I have written my own python ip/subnet tool. Its python2/3. I use theese methods
 
 Instalation:
 
-pip install iptoolsjj
+	pip install iptoolsjj
 
+import:
+
+	from iptoolsjj import *
 Example:
 
 
 Check if 192.168.10.10 is inside 192.168.10.0/22:
 
-from iptoolsjj import *
-if IP_TOOLS().is_in_subnet("192.168.10.10", "192.168.10.0/22"):
-    print ("yes")
+	if IP_TOOLS().is_in_subnet("192.168.10.10", "192.168.10.0/22"):
+    		print ("yes")
 	
 Convert mask '255.255.255.240' to '28':
 
-from iptoolsjj import *
-print(IP_TOOLS().mask255_to_dec("255.255.255.240"))
+	print(IP_TOOLS().mask255_to_dec("255.255.255.240"))
 
 Convert mask '28' to '['255', '255', '255', '240']' (normally it's list format):
 
-from iptoolsjj import *
-print(IP_TOOLS().dec_to_mask255(28))
+	print(IP_TOOLS().dec_to_mask255(28))
 
 or
 
-from iptoolsjj import *
-print(".".join(IP_TOOLS().dec_to_mask255(28)))
+	print(".".join(IP_TOOLS().dec_to_mask255(28)))
 
