@@ -6,18 +6,18 @@ Instalation:
 
 import:
 
-	from iptoolsjj import *
+	import iptoolsjj
 Example:
 
 
 Check if 192.168.10.10 is inside 192.168.10.0/22:
 
-	if IP_TOOLS().is_in_subnet("192.168.10.10", "192.168.10.0/22"):
+	if iptoolsjj.is_in_subnet("192.168.10.10", "192.168.10.0/22"):
     		print ("yes")
 	
 Convert mask '255.255.255.240' to '28':
 
-	print(IP_TOOLS().mask255_to_dec("255.255.255.240"))
+	print(iptoolsjj.mask255_to_dec("255.255.255.240"))
 
 Convert mask '28' to '['255', '255', '255', '240']' (normally it's list format):
 

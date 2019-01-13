@@ -87,3 +87,4 @@ class IP_TOOLS:
         if net_AND == ip_AND: return True           
         else : return False
 
+iptoolsjj=IP_TOOLS()

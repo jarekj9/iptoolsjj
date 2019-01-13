@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(name='iptoolsjj',
-      version='1.0.2',
+      version='1.0.3',
       description='IP Tools',
-      url='https://github.com/jarekj9/ip_tools',
+      url='https://github.com/jarekj9/iptoolsjj',
       author='Jaroslaw Jankun',
       author_email='jaroslaw.jankun@gmail.com',
       license='MIT',
