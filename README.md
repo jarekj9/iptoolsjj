@@ -6,7 +6,7 @@ Instalation:
 
 import:
 
-	import iptoolsjj
+	from iptoolsjj import *
 Example:
 
 

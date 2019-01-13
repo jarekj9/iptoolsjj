@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='iptoolsjj',
-      version='1.0.3',
+      version='1.0.4',
       description='IP Tools',
       url='https://github.com/jarekj9/iptoolsjj',
       author='Jaroslaw Jankun',
