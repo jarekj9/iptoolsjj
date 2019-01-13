@@ -21,9 +21,9 @@ Convert mask '255.255.255.240' to '28':
 
 Convert mask '28' to '['255', '255', '255', '240']' (normally it's list format):
 
-	print(IP_TOOLS().dec_to_mask255(28))
+	print(iptoolsjj.dec_to_mask255(28))
 
 or
 
-	print(".".join(IP_TOOLS().dec_to_mask255(28)))
+	print(".".join(iptoolsjj.dec_to_mask255(28)))
 
