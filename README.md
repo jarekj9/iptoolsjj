@@ -1,10 +1,14 @@
-I have written my own python ip/subnet tool. Its python2/3. I use theese methods to conver ip mask formats and to check if ip/subnet belong to other subnet. Perhaps these are not the best, but they get the job done.
+I have written my own python ip/subnet tool. It's for python2/3.
+Use theese methods to conver ip mask formats and to check if ip/subnet belong to other subnet.
+I made it partly for fun and to learn, so perhaps these are not the best, but they get the job done.
+Checking if ip belongs to subnet is actually about 20-30% faster, than with tools from netaddr module.
 
 Instalation:
 
 	pip install iptoolsjj
 
-import:
+Import:
+(I use *, not worrying about namespace because its small script ):
 
 	from iptoolsjj import *
 Example:
