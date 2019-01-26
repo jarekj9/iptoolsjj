@@ -92,6 +92,19 @@ class IP_TOOLS:
         for s in range(len(ip_octet)): ip_AND+= str(int(ip_octet[s]) & int(mask_octets[s]))
 
         if net_AND == ip_AND: return True           
-        else : return False
+        else : return False        
+    #=======================================================================================
+    #returns subnet ip e.g.: get_subnet_ip("192.168.1.10/24) returns 192.168.1.0  
+    def get_subnet_ip(self,address):                                      
+        ip = address.split("/")[0]  #ip
+        mask_dec = int(address.split('/')[1])  #this is decimal mask
+        ip_octet = ip.split('.')              #puts host ip into array with octets
+
+        mask_octets=self.dec_to_mask255(mask_dec) #get mask in other format
+                                               
+        ip_AND=[]                                      #AND of ip with mask
+        for s in range(len(ip_octet)): ip_AND.append( str(int(ip_octet[s]) & int(mask_octets[s])) )
+
+        return ".".join(ip_AND) 
 		
 iptoolsjj=IP_TOOLS()
