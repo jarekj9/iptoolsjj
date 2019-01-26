@@ -8,8 +8,25 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 '''
+import re
 
 class IP_TOOLS:
+    
+    #=======================================================================================
+    #if ip is in good format it returns True, e.g.: verify('126.23.120.224') 
+    #pass second argument to verify format with mask like /24, e.g.: verify('126.23.120.224/24','ip/mask')
+    #pass second argument to verify format with mask like 255.255.255.240, e.g.: verify('126.23.120.224/24','ip/mask255')
+    def verify(self,ip, *args):
+        regex_ip='^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$'
+        regex_ipmask='^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\/([0-9]|[1-2][0-9]|3[0-2])$'    
+        regex_ipmask255='^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\/(((255|254|252|240|224|192|128)\.0\.0\.0)|(255\.(255|254|252|240|224|192|128)\.0\.0)|(255\.255\.(255|254|252|240|224|192|128)\.0)|(255\.255\.255\.(255|254|252|240|224|192|128)))$'
+    
+        expression=regex_ip
+        if "".join(args)=='ip/mask': expression=regex_ipmask
+        if "".join(args)=='ip/mask255': expression=regex_ipmask255
+    
+        if re.search(expression,ip): return True
+        else: return False
     #=======================================================================================
     #gives partial octet of mask, which is not 255 and not 0, for example if number of '1s' is N=7, then we have 128, for 6 : 192, for 5 : 224
     #this is necessary for 'is_in_subnet' and 'dec_to_mask255' methods
@@ -58,6 +75,7 @@ class IP_TOOLS:
     def is_in_subnet(self,ip,net):                               
        
         if "/" in ip: ip=ip.split("/")[0]   # if 'ip' is also subnet (implicitly smaller, than 'net')
+       
        
         if len(net.split('/')) == 2:
             mask_dec = int(net.split('/')[1])  #this is decimal mask
