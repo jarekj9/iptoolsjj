@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: iptoolsjj
-Version: 1.2.2
+Version: 1.2.3
 Summary: IP Tools
 Home-page: https://github.com/jarekj9/iptoolsjj
 Author: Jaroslaw Jankun
@@ -25,8 +25,9 @@ Description: I have written my own python ip/subnet tool. It's for python2/3.
         Import:
         (I use *, not worrying about namespace because its small script ):
         
-        	from iptoolsjj import *
-        Example:
+        	from iptoolsjj import iptoolsjj
+        
+        Examples:
         
         
         Check if 192.168.10.10 is inside 192.168.10.0/22:

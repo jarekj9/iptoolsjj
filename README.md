@@ -17,8 +17,9 @@ Methods:
 Import:
 (I use *, not worrying about namespace because its small script ):
 
-	from iptoolsjj import *
-Example:
+	from iptoolsjj import iptoolsjj
+
+Examples:
 
 
 Check if 192.168.10.10 is inside 192.168.10.0/22:
