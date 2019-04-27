@@ -3,21 +3,21 @@ Use theese methods to conver ip mask formats and to check if ip/subnet belong to
 I made it partly for fun and to learn, so perhaps these are not the best, but they get the job done.
 Checking if ip belongs to subnet is actually about 20-30% faster, than with tools from netaddr module.
 
-Instalation:
-
-	pip install iptoolsjj
-
-Methods:
+Methods provided:
 - is_in_subnet : check if ip belongs to subnet
 - verify : check if ip or ip/netmask are valid
 - get_subnet_ip : get subnet ip for some ip/mask
 - mask255_to_dec : convert ip mask format
 - dec_to_mask255 : convert ip mask format
+- is_mask : check if ip mask is real
+
+Instalation:
+
+	pip install iptoolsjj
 
 Import:
-(I use *, not worrying about namespace because its small script ):
 
-	from iptoolsjj import iptoolsjj
+	import iptoolsjj
 
 Examples:
 
@@ -49,3 +49,6 @@ or
 
 	print('.'.join(iptoolsjj.dec_to_mask255(28)))
 
+Check if mask is real mask in format xxx.xxx.xxx.xxx:
+
+	print(is_mask("255.255.255.0"))

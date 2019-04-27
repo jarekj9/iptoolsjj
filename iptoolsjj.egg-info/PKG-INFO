@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: iptoolsjj
-Version: 1.2.3
+Version: 1.2.6
 Summary: IP Tools
 Home-page: https://github.com/jarekj9/iptoolsjj
 Author: Jaroslaw Jankun
@@ -11,21 +11,20 @@ Description: I have written my own python ip/subnet tool. It's for python2/3.
         I made it partly for fun and to learn, so perhaps these are not the best, but they get the job done.
         Checking if ip belongs to subnet is actually about 20-30% faster, than with tools from netaddr module.
         
-        Instalation:
-        
-        	pip install iptoolsjj
-        
-        Methods:
+        Methods provided:
         - is_in_subnet : check if ip belongs to subnet
         - verify : check if ip or ip/netmask are valid
         - get_subnet_ip : get subnet ip for some ip/mask
         - mask255_to_dec : convert ip mask format
         - dec_to_mask255 : convert ip mask format
         
-        Import:
-        (I use *, not worrying about namespace because its small script ):
+        Instalation:
         
-        	from iptoolsjj import iptoolsjj
+        	pip install iptoolsjj
+        
+        Import:
+        
+        	import iptoolsjj
         
         Examples:
         
