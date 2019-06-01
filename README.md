@@ -5,6 +5,7 @@ Checking if ip belongs to subnet is actually about 20-30% faster, than with tool
 
 Methods provided:
 - is_in_subnet : check if ip belongs to subnet
+- is_in_range : check if ip belongs to ip range
 - verify : check if ip or ip/netmask are valid
 - get_subnet_ip : get subnet ip for some ip/mask
 - mask255_to_dec : convert ip mask format
@@ -24,8 +25,11 @@ Examples:
 
 Check if 192.168.10.10 is inside 192.168.10.0/22:
 
-	if iptoolsjj.is_in_subnet('192.168.10.10', '192.168.10.0/22'):
-    		print ('yes')
+	print(iptoolsjj.is_in_subnet('192.168.10.10', '192.168.10.0/22'))
+			
+Check if 192.168.51.1 is between 192.168.50.100 and 192.168.60.50:
+
+	print(iptoolsjj.is_in_range('192.168.50.100','192.168.60.50','192.168.51.1'))
 
 Verify if ip or ip with mask is in good format:
 

@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md')) as f:
 
 
 setup(name='iptoolsjj',
-      version='1.3.0',
+      version='1.4.0',
       description='IP Tools',
       long_description=long_description,
       long_description_content_type='text/markdown',	
