@@ -115,3 +115,19 @@ def get_subnet_ip(address):
     for s in range(len(ip_octet)): ip_AND.append( str(int(ip_octet[s]) & int(mask_octets[s])) )
 
     return ".".join(ip_AND)
+#=======================================================================================
+#method returns True if ip is between ip_start and ip_end range
+def is_in_range(ip_start, ip_end,ip):
+	ip_start_tab=ip_start.split('.')
+	ip_end_tab=ip_end.split('.')
+	ip_tab=ip.split('.')
+	
+	#below, for example 1.16.100.99 becomes 001016100099, so I can compare them later
+	ip_start_number= "".join([str('{:03}'.format(int(number))) for number in ip_start_tab])  
+	ip_end_number= "".join([str('{:03}'.format(int(number))) for number in ip_end_tab])
+	ip_number= "".join([str('{:03}'.format(int(number))) for number in ip_tab])
+	
+	if int(ip_number) >= int(ip_start_number) and int(ip_number) <= int(ip_end_number):
+		return True
+	else:
+		return False
