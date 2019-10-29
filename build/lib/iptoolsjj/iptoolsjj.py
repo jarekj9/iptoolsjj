@@ -1,17 +1,8 @@
-'''
-Copyright 2018 Jaroslaw Jankun, jaroslaw.jankun@gmail.com
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'''
+#2018, jaroslaw.jankun@gmail.com
+#v1.4
 import re
 
 
-#=======================================================================================
 #if ip is in good format it returns True, e.g.: verify('126.23.120.224') 
 #pass second argument to verify format with mask like /24, e.g.: verify('126.23.120.224/24','ip/mask')
 #pass second argument to verify format with mask like 255.255.255.240, e.g.: verify('126.23.120.224/24','ip/mask255')
@@ -26,17 +17,20 @@ def verify(ip, *args):
 
     if re.search(expression,ip): return True
     else: return False
-#=======================================================================================
-#gives partial octet of mask, which is not 255 and not 0, for example if number of '1s' is N=7, then we have 128, for 6 : 192, for 5 : 224
-#this is necessary for 'is_in_subnet' and 'dec_to_mask255' methods
-def _not_full_octet(N,base,P):           
-    if N == 1 : return str(base)             # base is 128 , P is 64 ( needs to be so :) )       
-    else:
-        base+=P
-        P=P//2                              # added double slash // for python 3 !
-        return _not_full_octet(N-1,base,P)
+
+
 #gives mask in format x.x.x.x from mask in decimal format like 24 or 16 or 23...
-def dec_to_mask255(mask_dec):    
+def dec_to_mask255(mask_dec,**kwargs):    
+    
+    #gives partial octet of mask, which is not 255 and not 0, for example if number of '1s' is N=7, then we have 128, for 6 : 192, for 5 : 224
+    #this is necessary for 'is_in_subnet' and 'dec_to_mask255' methods
+    def _not_full_octet(N,base,P):           
+        if N == 1 : return str(base)             # base is 128 , P is 64 ( needs to be so :) )       
+        else:
+            base+=P
+            P=P//2                              # added double slash // for python 3 !
+            return _not_full_octet(N-1,base,P)
+    	
     mask255=""                                  
     for x in range(0,4):                        # 4 times because there are 4 octets of mask
         if mask_dec >= 8:
@@ -49,27 +43,33 @@ def dec_to_mask255(mask_dec):
             
         if x!=3 : mask255+="." 
     mask_octets = mask255.split('.')            #puts MASK into array of octets
-    return mask_octets
-#=======================================================================================
+    
+    if kwargs.get('output') == 'string':
+        return ".".join(mask_octets)
+    else:
+        return mask_octets
+
 #changes mask in format: 255.255.255.128 to format: 25
 def mask255_to_dec(mask255):
+
+    # counts one octet of mask : for example for 128 it gives 1, for 192 it gives 2, for 224 gives 3
+    #necessary for method mask255_to_dec
+    def _one_octet(octet,base=128,increment=64,l=1):
+        if octet == 0: return 0
+        if base == octet : return l
+        base+=increment
+        increment=increment//2
+        l+=1
+        return _one_octet(octet,base,increment,l)
+    
+        return(mask_dec+l)
+
     mask_dec=0
     mask255_octets=mask255.split(".")
     for octet in mask255_octets:
-        mask_dec+=one_octet(int(octet))
+        mask_dec+=_one_octet(int(octet))
     return mask_dec
-# counts one octet of mask : for example for 128 it gives 1, for 192 it gives 2, for 224 gives 3
-#necessary for method mask255_to_dec
-def one_octet(octet,base=128,increment=64,l=1):
-    if octet == 0: return 0
-    if base == octet : return l
-    base+=increment
-    increment=increment//2
-    l+=1
-    return one_octet(octet,base,increment,l)
-
-    return(mask_dec+l)
-#=======================================================================================  
+ 
 #If provided mask(string) is real, returns True
 def is_mask(mask):
 	MASKS=["0.0.0.0", "128.0.0.0", "192.0.0.0", "224.0.0.0", "240.0.0.0", "248.0.0.0", "252.0.0.0", "254.0.0.0", "255.0.0.0",
@@ -79,7 +79,7 @@ def is_mask(mask):
 		"255.255.255.252", "255.255.255.254", "255.255.255.255"]
 	if mask in MASKS: return True
 	else: return False
-#=======================================================================================          
+          
 #if 'ip' belongs to subnet 'net', it gives True, otherwise - false
 def is_in_subnet(ip,net):                               
    
@@ -102,7 +102,7 @@ def is_in_subnet(ip,net):
 
     if net_AND == ip_AND: return True           
     else : return False        
-#=======================================================================================
+
 #returns subnet ip e.g.: get_subnet_ip("192.168.1.10/24) returns 192.168.1.0  
 def get_subnet_ip(address):                                      
     ip = address.split("/")[0]  #ip
@@ -115,3 +115,19 @@ def get_subnet_ip(address):
     for s in range(len(ip_octet)): ip_AND.append( str(int(ip_octet[s]) & int(mask_octets[s])) )
 
     return ".".join(ip_AND)
+
+#method returns True if ip is between ip_start and ip_end range
+def is_in_range(ip_start, ip_end,ip):
+	ip_start_tab=ip_start.split('.')
+	ip_end_tab=ip_end.split('.')
+	ip_tab=ip.split('.')
+	
+	#below, for example 1.16.100.99 becomes 001016100099, so I can compare them later
+	ip_start_number= "".join([str('{:03}'.format(int(number))) for number in ip_start_tab])  
+	ip_end_number= "".join([str('{:03}'.format(int(number))) for number in ip_end_tab])
+	ip_number= "".join([str('{:03}'.format(int(number))) for number in ip_tab])
+	
+	if int(ip_number) >= int(ip_start_number) and int(ip_number) <= int(ip_end_number):
+		return True
+	else:
+		return False

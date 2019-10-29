@@ -1,0 +1,2 @@
+01.06.2019 : v1.4.1 : Added is_in_range method
+28.10.2019 : v1.4.2 : Modified dec_to_mask255 method so it can also output as string. Reorganized some methods to be internal scope in parent methods.

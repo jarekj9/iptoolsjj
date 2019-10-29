@@ -1,7 +1,10 @@
-I have written my own python ip/subnet tool. It's for python2/3.
+I have written my own python ip/subnet tool. 
+It works in both python 2 and 3. 
+It does not have dependencies except standard 're' module.
+
 Use theese methods to conver ip mask formats and to check if ip/subnet belong to other subnet.
 I made it partly for fun and to learn, so perhaps these are not the best, but they get the job done.
-Checking if ip belongs to subnet is actually about 20-30% faster, than with tools from netaddr module.
+Checking if ip belongs to subnet is even a bit faster, than with tools from netaddr module.
 
 Methods provided:
 - is_in_subnet : check if ip belongs to subnet
@@ -31,7 +34,7 @@ Check if 192.168.51.1 is between 192.168.50.100 and 192.168.60.50:
 
 	print(iptoolsjj.is_in_range('192.168.50.100','192.168.60.50','192.168.51.1'))
 
-Verify if ip or ip with mask is in good format:
+Verify if ip or ip with mask is valid:
 
 	print(iptoolsjj.verify('192.168.1.22'))
 	print(iptoolsjj.verify('192.168.1.22/25','ip/mask'))
@@ -45,13 +48,13 @@ Convert mask '255.255.255.240' to '28':
 
 	print(iptoolsjj.mask255_to_dec('255.255.255.240'))
 
-Convert mask '28' to '['255', '255', '255', '240']' (normally it's list format):
+Convert mask '28' to '['255', '255', '255', '240']' (by default it's list format):
 
 	print(iptoolsjj.dec_to_mask255(28))
 
 or
 
-	print('.'.join(iptoolsjj.dec_to_mask255(28)))
+	print(iptoolsjj.dec_to_mask255(28,output='string'))
 
 Check if mask is real mask in format xxx.xxx.xxx.xxx:
 
